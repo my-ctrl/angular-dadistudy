@@ -1,0 +1,97 @@
+ng g component components/news 
+  这样就会在app文件夹中新生成一个文件夹components
+  并在文件夹components中生成news组件
+
+创建生成后的组件配置在app.module.ts中@NgModule的declarations中
+  如NewsComponent  配置当前项目的运行组件
+
+创建服务命令  ng g service services/storage
+   然后在app.module.ts中引入并注入(provider)服务
+   然后在homes.component.ts中也引入服务并在constructor中声明了这个服务
+通过服务可以实现方法共享
+组件可以调用服务，但是服务不能调用组件
+组件也没法调用组件里的方法 但是组件可以父子传值
+服务与服务之间可以互相调用
+
+服务 1.创建服务 2.在app.module中导入，并在provider中配置 然后在服务中写方法 谁想用导入服务就可以了 
+
+ngOnInit() 组件和指令初始化完成 并不是真正的DOM加载完成
+ngAfterViewInit() DOM加载完成后
+
+定义的节点的名字 #mybox
+
+
+父子传值  必须记住
+ 父给子传值 不仅可以给子组件传递简单的数据，还可以把 
+   自己的方法以及整个父组件传给子组件
+  父 [msg]='msg'  
+  子组件引入input模块
+  子组件中@input接收父组件传过来的数据  （通过@input装饰器来接收）
+  home父 header子
+
+子传父   第一种方法 必须记住
+    父组件通过@ViewChild主动获取子组件的数据和方法
+    news父  footer子
+ 
+子向父   第二种方法 这个了解下 因为比较复杂 弹幕实际很常用
+    子组件通过@output触发父组件的方法 
+
+非父子组件之间的通信 用服务 和 localStorage这两种都可以解决
+
+
+Angular中的生命周期函数
+  通俗的讲就是 组件创建 组件更新 组件销毁的时候会触发的一系列的方法
+  组件有生命周期函数，指令也有生命周期函数
+
+  ngOnChanges()  有父子组件传值会触发 没有就不触发
+
+  ngOnInit  非常重要  请求数据放在这里 以及初始化放在这里
+  ngDoCheck()  在这里可以做一些自定义的操作 比如看输入的数据有没有改变，
+               改变了做一个操作，没有改变做一个操作
+  
+  ngAfterContentInit()  组件渲染完成后触发的生命周期函数
+
+  ngAfterContentChecked() 和上面ngDoCheck()一样，组件初始化完成后，可以
+      做一些自己定义的操作，也就是自定义操作。
+
+  ngAfterViewInit() 非常重要  这个是视图加载完成，一般做一些DOM操作
+
+  ngAfterViewChecked()  和上面ngDoCheck()一样,在view以后可以做一些自定义的操作
+
+  ngOnDestory()  非常重要 组件销毁的时候触发的 比如用户信息忘记保存了，可以
+      在销毁的时候保存起来
+  
+
+
+
+Rxjs介绍    例子是request.service homes
+  是ReactiveX编程理念的javascript版本。ReactiveX来自微软，它是
+      一种针对异步数据流的编程。
+  包括http请求，DOM事件或者普通数据等包装成流的形式，使我们能以同步编程的方式
+      处理异步数据。
+  类似于Promise，但比它更强大
+
+  用法：
+      在服务里面用所以服务里面引入
+    可以中途撤回，可以发射多个值，提供多种工具函数等。
+    可以实现爬虫爬一次再一次，爬到数据库保存再爬一次又可以增加到数据库
+
+    filter过滤 map数据处理
+      使用如在homes中先引入，才能用里面提供的工具方法
+        
+
+Angular请求数据
+    先在module中注册，
+    在用到的地方引入  并在构造函数中声明
+
+    用到组件newsdata来举例
+    post请求 除了以上，还要在用到的地方引入HttpHeaders,并设置请求头，把这个类型传进去
+
+  
+
+
+关于路由
+  先在module中注册路由模块并引入
+  <router-outlet></router-outlet>
+  path component 用户访问什么路径，就挂载什么组件（哪些组件要路由，就在路由中引入这些组件）
+  
